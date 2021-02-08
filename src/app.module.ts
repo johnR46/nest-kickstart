@@ -1,27 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
+import { dbConfig } from '../config/db.config';
+import { SftpController } from './controller/sftp.controller';
+import { SftpService } from './service/sftp.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'root',
-      database: '',
-      entities: [],
-      synchronize: true,
-    }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TypeOrmModule.forRoot(dbConfig)],
+  controllers: [SftpController],
+  providers: [SftpService],
 })
 export class AppModule {
-  constructor(private connection: Connection){
-    
-  }
+  constructor(private connection: Connection) {}
 }
